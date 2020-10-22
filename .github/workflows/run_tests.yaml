@@ -4,6 +4,8 @@ on:
     branches:
     - master
     - test_github_actions
+  schedule:
+    - cron: '*/30 * * * *'
 
 name: Run Tests
 
@@ -32,7 +34,7 @@ jobs:
         run: |
           pip install boto3
           cd jmeter-icap-poc/cloudformation
-          python3 create_stack.py --total_users 1000
+          python3 create_stack.py --total_users 20
         env:
           BUCKET: ${{ secrets.BUCKET }}
           FILE_NAME: ${{ secrets.FILE_NAME }}
