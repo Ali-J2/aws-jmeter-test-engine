@@ -24,7 +24,7 @@
       },
       "AmiImage" : {
          "Description" : "Ami image that will be used to launch the server",
-         "Default" : "ami-054907ddd772f1d30",
+         "Default" : "ami-0bcef9ae21931cdc7",
          "Type" : "String"
       },
       "InstanceType" : {
