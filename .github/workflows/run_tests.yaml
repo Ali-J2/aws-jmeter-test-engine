@@ -36,3 +36,4 @@ jobs:
         env:
           BUCKET: ${{ secrets.BUCKET }}
           FILE_NAME: ${{ secrets.FILE_NAME }}
+
