@@ -3,6 +3,7 @@ on:
   push:
     branches:
     - master
+    - test_github_actions
 
 name: Run Tests
 

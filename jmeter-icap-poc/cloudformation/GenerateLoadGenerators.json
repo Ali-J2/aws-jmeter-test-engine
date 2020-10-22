@@ -5,12 +5,12 @@
     "VpcId": {
       "Type": "String",
       "Description" : "VPC ID",
-      "Default" : "vpc-02db6ac5915e8de9b"
+      "Default" : "vpc-e46ca29d"
     },
     "SubnetIds":  {
       "Type": "CommaDelimitedList",
       "Description" : "Subnet IDs",
-      "Default" : "subnet-02e0fb935c900d08e"
+      "Default" : "subnet-60777d28"
     },
       "AsgName" : {
          "Description" : "Autoscaling group name",
@@ -20,11 +20,11 @@
       "KeyPairName" : {
          "Description" : "Keypair that will be used to connect to the server",
          "Type" : "String",
-         "Default" : "AWS-TestEngine-Key"
+         "Default" : "faridpcre"
       },
       "AmiImage" : {
          "Description" : "Ami image that will be used to launch the server",
-         "Default" : "ami-0bdee44e8c2591697",
+         "Default" : "ami-054907ddd772f1d30",
          "Type" : "String"
       },
       "InstanceType" : {
@@ -36,7 +36,7 @@
       },
       "InstanceSecurityGroup":{
         "Type":"String",
-        "Default" : "sg-0c82ddcb24373c694"
+        "Default" : "sg-0cfe2677131cd7353"
       },
      "MinInstances": {
        "Type": "Number",
