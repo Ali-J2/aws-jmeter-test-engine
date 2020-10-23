@@ -30,9 +30,12 @@ jobs:
         run: |
           pip install boto3
           cd jmeter-icap-poc/cloudformation
-          python3 create_stack.py --total_users 20 --ramp_up=20 --duration=900 --influx_host=${INFLUX_HOST}
+          python3 create_stack.py --total_users ${TOTAL_USERS:-20} --ramp_up=${RAMP_UP:-20} --duration=${DURATION:-900} --influx_host=${INFLUX_HOST:-172.31.45.19} --endpoint_url=${ENDPOINT_URL:-gw-icap-k8s-a0c293ac.hcp.uksouth.azmk8s.io}
         env:
           BUCKET: ${{ secrets.BUCKET }}
           FILE_NAME: ${{ secrets.FILE_NAME }}
           INFLUX_HOST: ${{ secrets.INFLUX_HOST }}
-
+          ENDPOINT_URL: ${{ secrets.ENDPOINT_URL }}
+          TOTAL_USERS: ${{ secrets.TOTAL_USERS }}
+          RAMP_UP: ${{ secrets.RAMP_UP }}
+          DURATION: ${{ secrets.DURATION }}
