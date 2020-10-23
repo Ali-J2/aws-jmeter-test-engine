@@ -28,7 +28,7 @@ def get_configuration(key):
 
 def get_size(users_per_instance):
 
-    # Determine the size of ec2 instance
+    # Determine the size of ec2 instance and jvm memory
     instance_type = "m4.2xlarge"
     jvm_memory = "9216m"
     if 0 < users_per_instance < 1000:
@@ -66,6 +66,9 @@ def main():
     parser.add_argument('--endpoint_url', '-e', default="gw-icap01.westeurope.azurecontainer.io",
                         help='ICAP server endpoint URL (default: gw-icap01.westeurope.azurecontainer.io)')
 
+    parser.add_argument('--influx_host', '-i', default="10.112.0.112",
+                        help='Influx DB host (default: 10.112.0.112)')
+
     args = parser.parse_args()
     
     total_users = int(args.total_users)
@@ -73,6 +76,7 @@ def main():
     ramp_up = args.ramp_up
     duration = args.duration
     endpoint_url = args.endpoint_url
+    influx_host = args.influx_host
     
     # calculate number of instances required
     instances_required = ceil(total_users/users_per_instance)
@@ -96,7 +100,9 @@ def main():
             print("Please provide total_users in multiples of users_per_instance.")
             exit(0)
 
-    
+    bucket = get_configuration("bucket")
+    file_name = get_configuration("file_name")
+    instance_type, jvm_memory = get_size(users_per_instance)
 
     # write the script to s3 bucket after updating the parameters
     with open("../scripts/StartExecution.sh") as f:
@@ -110,10 +116,11 @@ def main():
     script_data = re.sub("-Jp_url=[a-zA-Z0-9\-\.]*", "-Jp_url=" + str(endpoint_url), script_data)
     script_data = re.sub("Xms[0-9]*m", "Xms" + str(jvm_memory), script_data)
     script_data = re.sub("Xmx[0-9]*m", "Xmx" + str(jvm_memory), script_data)
+    script_data = re.sub("-Jp_influxHost=[a-zA-Z0-9\.]*", "-Jp_influxHost=" + influx_host, script_data)
+    script_data = re.sub("-Jp_bucket=[a-z0-9\-]*", "-Jp_bucket=" + bucket, script_data)
+    script_data = re.sub("s3://[a-z0-9\-]*", "s3://" + bucket, script_data)
 
     s3_client = session.client('s3')
-    bucket = get_configuration("bucket")
-    file_name = get_configuration("file_name")
     s3_client.put_object(Bucket=bucket,
                         Body=script_data,
                         Key=file_name)

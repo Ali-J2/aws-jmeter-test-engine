@@ -44,6 +44,8 @@ Pass input parameters as required to the script.
 
 `endpoint_url`is the ICAP server URL. Default value is gw-icap02.westeurope.azurecontainer.io
 
+`inlfux_host` is the IP address or hostname of the Influx DB
+
 Based on the values passed for total_users and users_per_instance, number of instances required will be calculated. The total users will be equally divided among all the instances.
 
 Based on the calculated value of number of users per instance, the size of the EC2 is choosed based on the below table:
@@ -73,7 +75,7 @@ python create_stack.py --total_users 4000 --users_per_instance 4000
 
 Windows powershell or command prompt:
 ```powershell
-python create_stack.py --total_users 4000 --users_per_instance 4000 --ramp_up=300 --duration=900 --endpoint_url=gw-icap01.westeurope.azurecontainer.io
+python create_stack.py --total_users 4000 --users_per_instance 4000 --ramp_up=300 --duration=900 --inlfux_host=10.112.0.112 --endpoint_url=gw-icap01.westeurope.azurecontainer.io
 ```
 
 7. Once the tests are completed, delete the stack from AWS cloudformation using console and run the script again when required.
